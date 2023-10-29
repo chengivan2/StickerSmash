@@ -3,11 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import ImageViewer from './components/ImageViewer';
 import Button from './components/Button'
+import EmojiPicker from "./components/EmojiPicker";
+import CircleButton from './components/CircleButton';
+import EmojiList from './components/EmojiList';
+import IconButton from './components/IconButton';
 import * as ImagePicker from 'expo-image-picker';
 
 const PlaceholderImage = require('./assets/images/background-image.png');
 
 export default function App() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pickedEmoji, setPickedEmoji] = useState(null);
   const [showAppOptions, setShowAppOptions] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const onReset = () => {
@@ -15,7 +21,11 @@ export default function App() {
   };
 
   const onAddSticker = () => {
-    // we will implement this later
+    setIsModalVisible(true);
+  };
+
+  const onModalClose = () => {
+    setIsModalVisible(false);
   };
 
   const onSaveImageAsync = async () => {
@@ -57,7 +67,13 @@ export default function App() {
           <Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
         </View>
       )}
-      <StatusBar style="auto" />
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+      </EmojiPicker>
+      <StatusBar
+     backgroundColor="blue"
+     barStyle="light-content"
+   />
     </View>
   );
 }
@@ -65,7 +81,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#000',
     alignItems: 'center',
   },
   imageContainer: {
