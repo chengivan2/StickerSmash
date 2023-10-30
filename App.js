@@ -41,8 +41,6 @@ export default function App() {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
       setShowAppOptions(true);
-    } else {
-      alert('You did not select any image.');
     }
   };
   return (
@@ -71,7 +69,7 @@ export default function App() {
       ) : (
         <View style={styles.footerContainer}>
           <Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
-          <Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
+          <Button label="Use this photo" style={styles.button2} onPress={() => setShowAppOptions(true)} />
         </View>
       )}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
@@ -94,6 +92,9 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: 'center',
+  },
+  button2: {
+    paddingTop: 5,
   },
   optionsContainer: {
     position: 'absolute',
