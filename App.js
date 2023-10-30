@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import ImageViewer from './components/ImageViewer';
+import EmojiSticker from './components/EmojiSticker';
 import Button from './components/Button'
 import EmojiPicker from "./components/EmojiPicker";
 import CircleButton from './components/CircleButton';
@@ -46,15 +47,21 @@ export default function App() {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <ImageViewer
-          placeholderImageSource={PlaceholderImage}
-          selectedImage={selectedImage}
-        />
+      <StatusBar
+            style="inverted"
+          />
+        <View style={styles.imageContainer}>
+          <ImageViewer
+            placeholderImageSource={PlaceholderImage}
+            selectedImage={selectedImage}
+          />
+
+          {pickedEmoji !== null ? <EmojiSticker imageSize={40} stickerSource={pickedEmoji} /> : null}
       </View>
 
       {showAppOptions ? (
          <View style={styles.optionsContainer}>
+          
          <View style={styles.optionsRow}>
            <IconButton icon="refresh" label="Reset" onPress={onReset} />
            <CircleButton onPress={onAddSticker} />
@@ -70,10 +77,6 @@ export default function App() {
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
-      <StatusBar
-     backgroundColor="blue"
-     barStyle="light-content"
-   />
     </View>
   );
 }
